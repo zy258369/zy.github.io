@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Chap2 Demo Sierpinski Gasket </title>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+	attribute vec4 vPosition;
+	void main(){
+		gl_Position = vPosition;
+	}
+	</script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+	precision mediump float;
+	void main(){
+		gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
+	}
+	</script>
+
+    <script type="text/javascript" src="../js/common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../js/common/initShaders.js"></script>
+    <script type="text/javascript" src="../js/common/gl-matrix-min.js"></script>
+
+    <script type="text/javascript" src="../js/ch02/gasket-triangles.js"></script>
+</head>
+
+<body>
+	<h2>gasket-triangles</h2>
+    <canvas id="gl-canvas" width="512" height="512">你的浏览器不支持HTML5 canvas元素</canvas>
+	<br/><a href="lab2-1.html"><input type="button" value="2D"></a>
+	<a href="lab2-2.html"><input type="button" value="3D"></a>
+	请输入层数：<input type="range" id="cengshu" min="0" max="10" step="1" /><br />
+	<a href="lab2-4.html"><input type="button" value="线性结构"></a>
+	旋转角度：<input type="number" id="jiaodu" min="-360" max="360" value="0" /><br />
+	<a href="lab2-5.html"><input type="button" value="扭曲三角" /></a>
+	扭曲角度：<input type="number" id="niuqv" min="-360" max="360" value="0" />
+	<input type="submit" value="提交"  onclick="initTriangles()"/>
+</body>
+
+</html>
