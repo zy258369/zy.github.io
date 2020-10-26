@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>draw 哆啦A梦</title>
+	<script id="rot-v-shader" type="x-shader/x-vertex">
+	attribute vec4 vPosition,mPosition;
+	uniform float theta;
+	void main()
+	{
+		float u = cos( theta );
+		float v = sin( theta );
+		
+		gl_Position.x = vPosition.x+v;
+		gl_Position.y = vPosition.y;
+		gl_Position.z = 0.0;
+		gl_Position.w = 1.0; 
+		//gl_Position = vPosition;
+	}
+	</script>
+	<script id="rot-f-shader" type="x-shader/x-fragment">
+	precision mediump float;
+	void main()
+	{
+		gl_FragColor = vec4( 0.0, 0.0, 1.0, 1.0 );
+	}
+	</script>
+	<!-- <script id="rot-v-shader2" type="x-shader/x-vertex">
+	attribute vec4 mPosition;
+	void main()
+	{
+		gl_Position = mPosition;
+	}
+	</script>
+	<script id="rot-f-shader2" type="x-shader/x-fragment">
+	precision mediump float;
+	void main()
+	{
+		gl_FragColor = vec4( 0.0, 1.0, 0.0, 1.0 );
+	}
+	</script> -->
+	
+	<script type="text/javascript" src="../js/common/webgl-utils.js"></script>
+	<script type="text/javascript" src="../js/common/initShaders.js"></script>
+	<script type="text/javascript" src="../js/common/gl-matrix-min.js"></script>
+	
+	<script type="text/javascript" src="../js/ch03/Adream.js"></script>
+</head>
+
+<body onload="initDola()">
+<canvas id="canvas" width="500" height="400">
+    Please use a browser that supports "canvas"
+</canvas>
+speed:<input type="range"id="speed" min="0" max="10" onchange="changeSpeed()"/>
+<a href="../index.html"><input type="button" value="返回"></a>
+</body>
+</html>
