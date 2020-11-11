@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=utf-8">
+	<title>Chap4 Demo</title>
+	<script id="vertex-shader" type="x-shader/x-vertex">
+	attribute vec4 vPosition;
+	attribute vec4 vColor;
+	varying vec4 fColor;
+
+	uniform vec3 theta;
+	uniform vec3 d;
+	uniform vec3 s;
+	uniform vec3 dc;
+	void main()
+	{
+		/* gl_Position = vPosition;
+		fColor = vColor; */
+		//compute the sins and cos of theta for each of the three axis in one computation
+		vec3 angles = radians( theta );
+		vec3 cost = cos( theta );
+		vec3 sint = sin( theta );
+		
+		mat4 rx = mat4(  1.0,  0.0,  0.0, 0.0,//立方体旋转
+						 0.0,  cost.x,  sint.x, 0.0,
+						 0.0,  -sint.x,  cost.x, 0.0,
+						 0.0,  0.0,  0.0, 1.0
+						 );
+		
+		mat4 ry = mat4(  cost.y,  0.0, -sint.y,  0.0,
+						 0.0,  1.0,  0.0,  0.0,
+						 sint.y,  0.0,  cost.y,  0.0,
+						 0.0,  0.0,  0.0,  1.0
+						 );
+		
+		mat4 rz = mat4(  cost.z,  sint.z,  0.0,  0.0,
+						 -sint.z,  cost.z,  0.0,  0.0,
+						 0.0,  0.0,  1.0,  0.0,
+						 0.0,  0.0,  0.0,  1.0
+						 );
+						 
+		mat4 ss = mat4( s.x,0.0,0.0,0.0,//三角形的缩放
+						0.0,s.y,0.0,0.0,
+						0.0,0.0,s.z,0.0,
+						0.0,0.0,0.0,1.0);
+						 
+		mat4 dt = mat4( 1.0,0.0,0.0,0.0,
+						0.0,1.0,0.0,0.0,
+						0.0,0.0,1.0,0.0,
+						d.x,d.y,d.z,1.0);
+						
+		mat4 dct = mat4( 1.0,0.0,0.0,0.0,//圆的平移
+						0.0,1.0,0.0,0.0,
+						0.0,0.0,1.0,0.0,
+						dc.x,dc.y,dc.z,1.0);
+		
+		fColor = vColor;
+		gl_Position = dct * ss * dt * rz * ry * rx * vPosition;
+		gl_Position.z = -gl_Position.z; 
+	}
+	</script>
+
+	<script id="fragment-shader" type="x-shader/x-fragment">
+	precision mediump float;
+	varying vec4 fColor;
+
+	void main()
+	{
+		gl_FragColor = fColor;
+	}
+	</script>
+	<script type="text/javascript" src="../js/common/webgl-utils.js"></script>
+	<script type="text/javascript" src="../js/common/initShaders.js"></script>
+	<script type="text/javascript" src="../js/common/gl-matrix-min.js"></script>
+	
+	<script type="text/javascript" src="../js/ch04/lab4-22.js"></script>
+</head>
+<body>
+<h1>lab4-2</h1>
+<canvas id="gl-canvas" width="512" height="512">
+你的浏览器不支持HTML5 canvas元素
+</canvas>
+<br />
+请选择图形:
+<select id="tuxing">
+	<option  value="0" >正三角形</option>
+	<option  value="1" >圆</option>
+	<option  value="2" >正方形</option>
+	<option  value="3" >立方体</option>
+</select>
+<select id="yanse">
+	<option value="0">red</option>
+	<option value="1">green</option>
+	<option value="2">blue</option>
+	<option value="3">yellow</option>
+	<option value="4">purple</option>
+	<option value="5">cyan</option>
+	<option value="6">black</option>
+</select>
+<br />
+圆的边数：10<input type="range" id="cs" min="10" max="150" step="10" />150<br />
+<button onclick="history.go(0)">清空</button>
+</body>
+</html>
